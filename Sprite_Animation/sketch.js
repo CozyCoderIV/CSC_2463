@@ -113,8 +113,8 @@ class Sprite{
   }
 }
 
-/*// Array of Objects
-let group = [];
+/// Array of Objects
+/*let group = [];
 let idle;
 
 // Image Array

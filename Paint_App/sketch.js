@@ -73,7 +73,6 @@ function draw() {
   if(mouseIsPressed && mouseX >= 50)
   {  stroke(value);
      strokeWeight(5);
-     //fill(value);
      curve(mouseX, mouseY, mouseX, mouseY);
      line(mouseX, mouseY, pmouseX, pmouseY);
   }
