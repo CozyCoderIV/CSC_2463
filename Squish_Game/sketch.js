@@ -41,20 +41,20 @@ function setup() {
   createCanvas(800, 700);
 
   // Instantiate Objects
-  for(let x = 0; x < blength/2; x++){
+  for(let x = 0; x < blength; x++){
     bugArray.push(new Bug(imgA, random(1, 5)));
   }
-  for(let j = 0; j < blength/2; j++){
+  for(let j = 0; j < blength; j++){
     bugArray.push(new Bug(imgC, random(1, 5)));
   }
 
 }
 function draw() {
-  background(130);
+  background(40, 5 ,7);
 
   // Text Setup
   textSize(30);
-  fill(95, 250, 90);
+  fill(195, 20, 50);
   text("Squish Game ", 10, 30);
   fill('white')
   text("Time: ", 270, 30);
