@@ -8,39 +8,33 @@ let sound3 = new Tone.Player('media/themeA.mp3').toDestination();
 function setup() {
   createCanvas(1100, 600);
   background(225, 220, 200);
- 
   change = false;
-
   noStroke();
   fill('red');
   rect(5, 10, 30, 30); // red
-
   fill('orange');
   rect(5, 40, 30, 30); // orange
-
   fill('yellow');
   rect(5, 70, 30, 30); // yellow
-
   fill(106, 255, 0);
   rect(5, 100, 30, 30); // green
-
   fill(0, 247, 255);
   rect(5, 130, 30, 30); // sky blue
-
   fill(0, 64, 255);
   rect(5, 160, 30, 30); // blue
-
   fill(221, 0, 255);
   rect(5, 190, 30, 30); // magenta
-
   fill(74, 39, 1);
   rect(5, 220, 30, 30); // brown
-
   fill('white');
   rect(5, 250, 30, 30); // white
-
   fill(0, 0, 0);
   rect(5, 280, 30, 30); // black
+
+  // Tone.Transport.start(); //starts the transport
+  // Tone.Transport.loop = true; //loops the sound
+  // Tone.Transport.loopStart = 0; //sets parameters for the loop
+  // Tone.Transport.loopEnd = '2:0:0';
 }
 
 let value = 0;
@@ -54,35 +48,35 @@ function draw() {
     change = true;
     console.log("orange" + change);
     value = color(255, 132, 0);
-  } else if(mouseX <= 75 && ((mouseY > 75 && mouseY < 95) && mouseIsPressed)){ 
+  } else if(mouseX <= 75 && ((mouseY > 75 && mouseY < 100) && mouseIsPressed)){ 
     change = true;
     console.log("yellow" + change);
     value = color(255, 230, 0);
-  } else if(mouseX <= 75 && ((mouseY > 95 && mouseY < 115) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 100 && mouseY < 135) && mouseIsPressed)){
     change = true;
     console.log("green" + change);
     value = color(106, 255, 0);
-  } else if(mouseX <= 75 && ((mouseY > 135 && mouseY < 145) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 135 && mouseY < 165) && mouseIsPressed)){
     change = true;
     console.log("sky blue" + change);
     value = color(0, 247, 255);
-  } else if(mouseX <= 75 && ((mouseY > 155 && mouseY < 185) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 165 && mouseY < 195) && mouseIsPressed)){
     change = true;
     console.log("blue" + change);
     value = color(0, 64, 255);
-  } else if(mouseX <= 75 && ((mouseY > 200 && mouseY < 215) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 195 && mouseY < 225) && mouseIsPressed)){
     change = true;
     console.log("magenta" + change);
     value = color(221, 0, 255);
-  } else if(mouseX <= 75 && ((mouseY > 225 && mouseY < 235) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 225 && mouseY < 255) && mouseIsPressed)){
     change = true;
     console.log("brown" + change);
     value = color(74, 39, 1);
-  } else if(mouseX <= 75 && ((mouseY > 245 && mouseY < 275) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 255 && mouseY < 285) && mouseIsPressed)){
     change = true;
     console.log("white" + change);
     value = color('white');
-  } else if(mouseX <= 75 && ((mouseY > 285 && mouseY < 300) && mouseIsPressed)){
+  } else if(mouseX <= 75 && ((mouseY > 285 && mouseY < 320) && mouseIsPressed)){
     change = true;
     console.log("black" + change);
     value = color('black');
@@ -119,3 +113,4 @@ function mouseReleased(){
 function playSound(){
     sound3.start();
 }
+
