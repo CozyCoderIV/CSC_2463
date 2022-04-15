@@ -10,8 +10,6 @@ let paint;
 
 let change;
 let bsensor;
-let asensor;
-let space;
 
 // Set up Tone
 let sound1 = new Tone.Player('media/paint.mp3').toDestination();
@@ -23,8 +21,6 @@ function preload(){
   // Setup Arduino Connection
   serialPDM = new PDMSerial(portName);
   bsensor = serialPDM.sensorData;
-  jsensor = serialPDM.sensorData;
-
 }
 function setup() {
   createCanvas(1100, 600);
@@ -62,7 +58,7 @@ function setup() {
 let value = 0;
 let count = 0;
 function draw() {
-  if(mouseIsPressed && jsensor.jx >= 50)
+  if(mouseIsPressed && mouseX >= 50)
   {  change = false;
      paint = true; 
      stroke(value);
@@ -128,10 +124,9 @@ function draw() {
       value = color('black');
       break;
   }
-  console.log(paint);
-  console.log("joystick X: " + jsensor.jx);
-  console.log("joystick Y: " + jsensor.jy);
 
+  console.log("mouseX: " + mouseX);
+  console.log("mouseY: " + mouseY);
 }
 
 function mousePressed(){
