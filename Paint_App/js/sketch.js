@@ -1,14 +1,39 @@
 // Attributes
+let serialPDM;
+let portName = "/dev/tty.usbmodem113401";
+
+let serial;
+let latestData;
+let acount = 0;
+
+let paint;
+
 let change;
+let bsensor;
+let asensor;
+let space;
 
 // Set up Tone
 let sound1 = new Tone.Player('media/paint.mp3').toDestination();
 let sound2 = new Tone.Player('media/switch.mp3').toDestination(); 
 let sound3 = new Tone.Player('media/themeA.mp3').toDestination(); 
+
+// Methods
+function preload(){
+  // Setup Arduino Connection
+  serialPDM = new PDMSerial(portName);
+  bsensor = serialPDM.sensorData;
+  jsensor = serialPDM.sensorData;
+
+}
 function setup() {
   createCanvas(1100, 600);
   background(225, 220, 200);
+
+  // CHange Boolean
   change = false;
+
+  // Colors
   noStroke();
   fill('red');
   rect(5, 10, 30, 30); // red
@@ -31,68 +56,87 @@ function setup() {
   fill(0, 0, 0);
   rect(5, 280, 30, 30); // black
 
-  // Tone.Transport.start(); //starts the transport
-  // Tone.Transport.loop = true; //loops the sound
-  // Tone.Transport.loopStart = 0; //sets parameters for the loop
-  // Tone.Transport.loopEnd = '2:0:0';
 }
+
 
 let value = 0;
 let count = 0;
 function draw() {
-  if((mouseX <= 75 && mouseY <= 45) && mouseIsPressed)
-  { change = true;
-    console.log("red" + change);
-    value = color(225, 0, 0);
-  } else if(mouseX <= 75 && ((mouseY > 45 && mouseY < 75) && mouseIsPressed)){
-    change = true;
-    console.log("orange" + change);
-    value = color(255, 132, 0);
-  } else if(mouseX <= 75 && ((mouseY > 75 && mouseY < 100) && mouseIsPressed)){ 
-    change = true;
-    console.log("yellow" + change);
-    value = color(255, 230, 0);
-  } else if(mouseX <= 75 && ((mouseY > 100 && mouseY < 135) && mouseIsPressed)){
-    change = true;
-    console.log("green" + change);
-    value = color(106, 255, 0);
-  } else if(mouseX <= 75 && ((mouseY > 135 && mouseY < 165) && mouseIsPressed)){
-    change = true;
-    console.log("sky blue" + change);
-    value = color(0, 247, 255);
-  } else if(mouseX <= 75 && ((mouseY > 165 && mouseY < 195) && mouseIsPressed)){
-    change = true;
-    console.log("blue" + change);
-    value = color(0, 64, 255);
-  } else if(mouseX <= 75 && ((mouseY > 195 && mouseY < 225) && mouseIsPressed)){
-    change = true;
-    console.log("magenta" + change);
-    value = color(221, 0, 255);
-  } else if(mouseX <= 75 && ((mouseY > 225 && mouseY < 255) && mouseIsPressed)){
-    change = true;
-    console.log("brown" + change);
-    value = color(74, 39, 1);
-  } else if(mouseX <= 75 && ((mouseY > 255 && mouseY < 285) && mouseIsPressed)){
-    change = true;
-    console.log("white" + change);
-    value = color('white');
-  } else if(mouseX <= 75 && ((mouseY > 285 && mouseY < 320) && mouseIsPressed)){
-    change = true;
-    console.log("black" + change);
-    value = color('black');
-  }
-  if(mouseIsPressed && mouseX >= 50)
+  if(mouseIsPressed && jsensor.jx >= 50)
   {  change = false;
-     console.log(count); 
+     paint = true; 
      stroke(value);
      strokeWeight(5);
+
      curve(mouseX, mouseY, mouseX, mouseY);
      line(mouseX, mouseY, pmouseX, pmouseY);
+
+     serialPDM.transmit('mouse', paint); // Send data 
   }
+  else{
+    paint = false;
+  }
+  switch(bsensor.p9){
+    case 0:
+      change = true;
+      paint = false;
+      value = color(255, 0, 0);
+      break;
+    case 1:
+      change = true;
+      paint = false;
+      value = color(255, 132, 0);
+      break;
+    case 2:
+      change = true;
+      paint = false;
+      value = color(255, 230, 0);
+      break;
+    case 3:
+      change = true;
+      paint = false;
+      value = color(106, 255, 0);
+      break;
+    case 4:
+      change = true;
+      paint = false;
+      value = color(0, 247, 255);
+      break;
+    case 5: 
+      change = true;
+      paint = false;
+      value = color(0, 64, 255);
+      break;
+    case 6: 
+      change = true;
+      paint = false;
+      value = color(221, 0, 255);
+      break;
+    case 7:
+      change = true;
+      paint = false;
+      value = color(74, 39, 1);
+      break;
+    case 8:
+      change = true;
+      paint = false;
+      value = color('white');
+      break;
+    case 9:
+      change = true;
+      paint = false;
+      value = color('black');
+      break;
+  }
+  console.log(paint);
+  console.log("joystick X: " + jsensor.jx);
+  console.log("joystick Y: " + jsensor.jy);
 
 }
+
 function mousePressed(){
   if(!change){
+    paint = true;
     sound1.start();
     sound2.stop();
   } else if(change){
@@ -104,13 +148,15 @@ function mousePressed(){
   }
 } 
 function mouseReleased(){
+  paint = false;
   count++;
   if(count >= 10){
     count = 0;
   }
   sound1.stop();
 }
+
 function playSound(){
     sound3.start();
 }
-
+ 
